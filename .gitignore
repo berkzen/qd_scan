@@ -1,0 +1,11 @@
+cat <<EOF > .gitignore
+__pycache__/
+*.py[cod]
+.venv/
+*.log
+*.csv
+*.png
+.ipynb_checkpoints/
+.DS_Store
+.vscode/
+EOF
