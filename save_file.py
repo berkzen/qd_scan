@@ -15,17 +15,34 @@ def rolling_average(values, window):
         averaged.append(avg)
     return averaged
 
-def save_results(measurement, config):
-    raw = [i[2] for i in measurement] #[[x, y, value], [...]]
+def save_results(results, config):
+    raw = [i[2] for i in results] #[[x, y, value], [...]]
     window = config["rolling_average_window"]
     filtered = rolling_average(raw, window)
     
     with open(config["output_csv"], "w", newline="") as f:
         writer = csv.writer(f)
         writer.writerow(["x", "y", "raw_values", "filtered_values"])
-        for i in range(len(measurement)):
-            row = list(measurement[i])
+        for i in range(len(results)):
+            row = list(results[i])
             row.append(filtered[i])
             writer.writerow(row)
             
     logging.info("Saved results to {}".format(config["output_csv"]))
+    return filtered
+    
+def detect_peak(results, filtered):
+    max_val = float("-inf")
+    max_coords = None
+    
+    for i in range(len(filtered)):
+        val = filtered[i]
+        if val is not None and val > max_val:
+            max_val = val
+            max_coords = (float(results[i][0]), float(results[i][1]))
+            
+    if max_coords is not None:
+        logging.info("Peak detected at {} with value {}".format(max_coords, max_val))
+    
+    else:
+        logging.warning("No valid filtered value to detect peak")

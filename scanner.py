@@ -4,7 +4,7 @@ from sim_devices import SimStage, SimSensor
 from devices import stageController, sensorController
 from config import load_config
 from logging_setup import setup_logging
-from save_file import save_results
+from save_file import save_results, detect_peak
 import logging
 import numpy as np
 import sys
@@ -46,7 +46,8 @@ def run_scan(config_path: str = "config.yaml"):
     
     logging.info("Scan complete.")
     
-    save_results(results, config)
+    filtered = save_results(results, config)
+    detect_peak(results, filtered)
     return config, results
            
 if __name__ == "__main__":
