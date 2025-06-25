@@ -1,4 +1,5 @@
-import random, time
+import random
+import time
 
 class SimStage:
     def __init__(self, move_time=0.1, fail_rate=0.05):

@@ -40,7 +40,7 @@ class sensorController:
             except ValueError:
                 logging.warning("Sensor raised ValueError on attempt: {}".format(attempt))
                 time.sleep(self.retry_delay)
-            logging.error("Sensor failed to produce valid reading after {} many retries".format(self.max_retries))
+            logging.error("Sensor failed to produce valid reading after {} attempts".format(self.max_retries))
             return None
 
 #for debugging devices.py separately                
