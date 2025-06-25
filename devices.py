@@ -42,14 +42,19 @@ class sensorController:
                 time.sleep(self.retry_delay)
             logging.error("Sensor failed to produce valid reading after {} many retries".format(self.max_retries))
             return None
-                
+
+#for debugging devices.py separately                
 if __name__ == "__main__":
     from logging_setup import setup_logging
-    from sim_devices import SimStage
+    from sim_devices import SimStage, SimSensor
     setup_logging({"log_level": "DEBUG"}, logfile="devices_debug.log")
 
     stage_init = SimStage()
     stage_debug = stageController(stage_init)
     stage_debug.move_to(1,1)
+    
+    sensor_init = SimSensor()
+    sensor_debug = sensorController(sensor_init)
+    sensor_debug.measure()
         
  

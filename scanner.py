@@ -6,6 +6,7 @@ from config import load_config
 from logging_setup import setup_logging
 import logging
 import numpy as np
+import sys
 
 def run_scan(config_path: str = "config.yaml"):
     #load config file and set up logging
@@ -37,6 +38,9 @@ def run_scan(config_path: str = "config.yaml"):
                 measurement = sensor.measure()
             else:
                 measurement = None
+                logging.info("The stage has failed to move, aborting the scan")
+                results.append((x, y, measurement))
+                sys.exit("Scan aborted due to stage failure")
             results.append((x, y, measurement))
     
     logging.info("Scan complete.")
