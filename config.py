@@ -1,3 +1,5 @@
+#Script to load the config file with error handling
+
 import yaml
 import logging
 

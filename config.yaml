@@ -1,5 +1,5 @@
-x_range: [0, 10, 11]
-y_range: [0, 10, 11]
+x_range: [0, 5, 6]
+y_range: [0, 5, 6]
 max_retries: 3
 rolling_average_window: 3
 retry_delay: 0.5
