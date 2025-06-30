@@ -1,8 +1,8 @@
 x_range: [0, 5, 6]
 y_range: [0, 5, 6]
-max_retries: 1
+max_retries: 3
 rolling_average_window: 3
 retry_delay: 0.5
 log_level: INFO
-output_csv: scan_output.csv
-output_plot: heatmap.png
+output_csv: scan_output
+output_plot: heatmap

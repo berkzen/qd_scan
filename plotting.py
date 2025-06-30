@@ -3,8 +3,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import logging
-import datetime
-import os.path
+from save_file import get_measurement_paths
 
 def plot_heatmap(results, filtered, config):
     x_coords = [i[0] for i in results]
@@ -44,14 +43,10 @@ def plot_heatmap(results, filtered, config):
     plt.ylabel("Y")
     plt.title("2D Heatmap (Filtered)")
     
-    save_path = "/Users/berkzengin/Desktop/qdProject/qd_scan/measurements"
-    timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S") 
-    filename = config["output_plot"]
-    filename = filename.replace(".png", "_{}.png".format(timestamp))
-    completeName = os.path.join(save_path, filename)
+    _ , plot_path = get_measurement_paths(config)
      
-    plt.savefig(completeName, dpi = 300)
+    plt.savefig(plot_path, dpi = 300)
     
-    logging.info("Saved heatmap as {}".format(filename))
+    logging.info("Saved heatmap as {}".format(config["output_plot"]))
     
 

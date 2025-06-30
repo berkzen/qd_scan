@@ -17,18 +17,23 @@ def rolling_average(values, window):
         averaged.append(avg)
     return averaged
 
+def get_measurement_paths(config):
+    timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+    save_dir = os.path.join(os.path.dirname(__file__), "measurements")
+    os.makedirs(save_dir, exist_ok=True)
+    csv_path = os.path.join(save_dir, "{}_{}.csv".format(config["output_csv"], timestamp))
+    plot_path = os.path.join(save_dir, "{}_{}.png".format(config["output_plot"], timestamp))
+    
+    return csv_path, plot_path
+
 def save_results(results, config):
     raw = [i[2] for i in results] #[[x, y, value], [...]]
     window = config["rolling_average_window"]
     filtered = rolling_average(raw, window)
     
-    save_path = "/Users/berkzengin/Desktop/qdProject/qd_scan/measurements"
-    timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-    filename = config["output_csv"]
-    filename = filename.replace(".csv", "_{}.csv".format(timestamp))
-    completeName = os.path.join(save_path, filename)
+    csv_path, _ = get_measurement_paths(config)
 
-    with open(completeName, "w", newline="") as f:
+    with open(csv_path, "w", newline="") as f:
         writer = csv.writer(f)
         writer.writerow(["x", "y", "raw_values", "filtered_values"])
         for i in range(len(results)):

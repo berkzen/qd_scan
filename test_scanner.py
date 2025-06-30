@@ -1,27 +1,9 @@
-#from scanner import run_scan
-import pytest
 import logging
 from unittest.mock import MagicMock
 from devices import stageController
 from sim_devices import SimStage
 from save_file import rolling_average, detect_peak
-
-#testing the output data, runs the main logic not ideal
-""" def test_run_scan_does_not_crash():
-    config, results = run_scan()
-    assert isinstance(config, dict), "Error loading config"
-    assert isinstance(results, list), "Error populating results"
-    
-    assert len(results) > 0, "Results are empty"
-    
-    for item in results:
-        assert isinstance(item, tuple), "Entities are not gathered right"
-        assert len(item) == 3, "Expected (xcoord, ycoord, sensorValue), got {}".format(item)
-        x, y, val = item
-        assert isinstance(x, float)
-        assert isinstance(y, float)
-        assert isinstance(val, (float, type(None))) """
-        
+      
 def test_state_retry_logic_wMock(caplog): #caplog to capture things using logging.*
     logging.basicConfig(level=logging.DEBUG)
     
