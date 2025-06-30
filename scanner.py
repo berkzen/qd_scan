@@ -5,6 +5,7 @@ from devices import stageController, sensorController
 from config import load_config
 from logging_setup import setup_logging
 from save_file import save_results, detect_peak
+from plotting import plot_heatmap
 import logging
 import numpy as np
 import sys
@@ -39,8 +40,14 @@ def run_scan(config_path: str = "config.yaml"):
                 measurement = sensor.measure()
             else:
                 measurement = None
-                logging.info("The stage has failed to move, aborting the scan")
+                logging.error("The stage has failed to move, aborting the scan")
                 results.append((x, y, measurement))
+                
+                #save before quitting the measurement
+                filtered = save_results(results, config)
+                detect_peak(results, filtered)
+                plot_heatmap(results, filtered, config)
+                
                 sys.exit("Scan aborted due to stage failure")
             results.append((x, y, measurement))
     
@@ -48,6 +55,7 @@ def run_scan(config_path: str = "config.yaml"):
     
     filtered = save_results(results, config)
     detect_peak(results, filtered)
+    plot_heatmap(results, filtered, config)
     return config, results
            
 if __name__ == "__main__":

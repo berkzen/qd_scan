@@ -13,7 +13,7 @@ class stageController:
         for attempt in range(1, self.max_retries + 1):
             try:
                 self.stage.move_to(x,y)
-                logging.debug("Moved to ({}, {}) at attempt: {}".format(x, y, attempt))
+                logging.info("Moved to ({}, {}) at attempt: {}".format(x, y, attempt))
                 return True
             except TimeoutError:
                 logging.warning("Timeout error on move to ({}, {}) at attempt: {}".format(x, y, attempt))

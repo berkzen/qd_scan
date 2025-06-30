@@ -2,6 +2,8 @@
 
 import logging
 import csv
+import os.path
+import datetime
 
 def rolling_average(values, window):
     averaged = []
@@ -20,7 +22,13 @@ def save_results(results, config):
     window = config["rolling_average_window"]
     filtered = rolling_average(raw, window)
     
-    with open(config["output_csv"], "w", newline="") as f:
+    save_path = "/Users/berkzengin/Desktop/qdProject/qd_scan/measurements"
+    timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+    filename = config["output_csv"]
+    filename = filename.replace(".csv", "_{}.csv".format(timestamp))
+    completeName = os.path.join(save_path, filename)
+
+    with open(completeName, "w", newline="") as f:
         writer = csv.writer(f)
         writer.writerow(["x", "y", "raw_values", "filtered_values"])
         for i in range(len(results)):
@@ -43,6 +51,7 @@ def detect_peak(results, filtered):
             
     if max_coords is not None:
         logging.info("Peak detected at {} with value {}".format(max_coords, max_val))
-    
+        return [(max_coords[0], max_coords[1], max_val)]
     else:
         logging.warning("No valid filtered value to detect peak")
+        return []

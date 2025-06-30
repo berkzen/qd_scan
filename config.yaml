@@ -1,6 +1,6 @@
 x_range: [0, 5, 6]
 y_range: [0, 5, 6]
-max_retries: 3
+max_retries: 1
 rolling_average_window: 3
 retry_delay: 0.5
 log_level: INFO
