@@ -1,4 +1,4 @@
-#Script for interfacing to (sim)Stage and (sim)Sensor w/ error handling & logging
+#Script for interfacing to (sim)Stage and (sim)Sensor w/ retry after delay, error handling & logging
 
 import time
 import logging
@@ -15,8 +15,8 @@ class stageController:
                 self.stage.move_to(x,y)
                 logging.info("Moved to ({}, {}) at attempt: {}".format(x, y, attempt))
                 return True
-            except TimeoutError:
-                logging.warning("Timeout error on move to ({}, {}) at attempt: {}".format(x, y, attempt))
+            except TimeoutError as e:
+                logging.warning("Stage failed to move: {}".format(e))
                 time.sleep(self.retry_delay)
         logging.error("Failed to move to ({}, {}) after {} attempts".format(x, y, attempt))
         return False
@@ -40,8 +40,9 @@ class sensorController:
             except ValueError:
                 logging.warning("Sensor raised ValueError on attempt: {}".format(attempt))
                 time.sleep(self.retry_delay)
-            logging.error("Sensor failed to produce valid reading after {} attempts".format(self.max_retries))
-            return None
+        #After failure to retain value for max_retries        
+        logging.error("Sensor failed to produce valid reading after {} attempts".format(self.max_retries))
+        return None
 
 
         

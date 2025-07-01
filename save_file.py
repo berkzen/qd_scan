@@ -13,7 +13,7 @@ def rolling_average(values, window):
             continue
         window_values = values[max(0, i - window + 1):(i + 1)]
         window_values = [j for j in window_values if j is not None]
-        avg = sum(window_values)/len(window_values) if window_values else None
+        avg = sum(window_values)/len(window_values)
         averaged.append(avg)
     return averaged
 
@@ -27,7 +27,7 @@ def get_measurement_paths(config):
     return csv_path, plot_path
 
 def save_results(results, config):
-    raw = [i[2] for i in results] #[[x, y, value], [...]]
+    raw = [i[2] for i in results] #[(x, y, value), (...)]
     window = config["rolling_average_window"]
     filtered = rolling_average(raw, window)
     
@@ -41,7 +41,7 @@ def save_results(results, config):
             row.append(filtered[i])
             writer.writerow(row)
             
-    logging.info("Saved results to {}".format(config["output_csv"]))
+    logging.info("Saved results to {}".format(csv_path))
     return filtered
     
 def detect_peak(results, filtered):
@@ -54,7 +54,7 @@ def detect_peak(results, filtered):
             max_val = val
             max_coords = (float(results[i][0]), float(results[i][1]))
             
-    if max_coords is not None:
+    if max_coords is not None: 
         logging.info("Peak detected at {} with value {}".format(max_coords, max_val))
         return [(max_coords[0], max_coords[1], max_val)]
     else:

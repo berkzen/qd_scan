@@ -47,8 +47,8 @@ def run_scan(config_path: str = "config.yaml"):
                 filtered = save_results(results, config)
                 detect_peak(results, filtered)
                 plot_heatmap(results, filtered, config)
-                
                 sys.exit("Scan aborted due to stage failure")
+                
             results.append((x, y, measurement))
     
     logging.info("Scan complete.")

@@ -47,6 +47,6 @@ def plot_heatmap(results, filtered, config):
      
     plt.savefig(plot_path, dpi = 300)
     
-    logging.info("Saved heatmap as {}".format(config["output_plot"]))
+    logging.info("Saved heatmap as {}".format(plot_path))
     
 

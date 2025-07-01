@@ -4,7 +4,7 @@ from devices import stageController
 from sim_devices import SimStage
 from save_file import rolling_average, detect_peak
       
-def test_state_retry_logic_wMock(caplog): #caplog to capture things using logging.*
+def test_state_retry_logic_wMock(caplog): 
     logging.basicConfig(level=logging.DEBUG)
     
     # simulate the simulated stage action
