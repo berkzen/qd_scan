@@ -21,7 +21,7 @@ def test_state_retry_logic_wMock(caplog):
     assert fake_stage.move_to.call_count == 3
     
     # check logs
-    assert "Timeout error" in caplog.text
+    assert "Stage failed to move" in caplog.text
     assert "Moved to" in caplog.text
     
     # final result
